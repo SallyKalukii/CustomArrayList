@@ -1,0 +1,106 @@
+public class MovieListManagement{
+
+    private CustomArrayList movieDetailList; //to avoid initializing movieDetailList
+
+    //constructor 
+    public MovieListManagement(){
+        movieDetailList = new CustomArrayList();
+    }
+    
+
+    //method for adding new movies to the list 
+    public void addNewMovie(String title, int releaseYear, double rating){
+        //creating Movie objects to use them as elements 
+        Movie newMovie = new Movie(title, releaseYear, rating);
+        //invoking the add method from the CustomArrayList
+        movieDetailList.add(newMovie);
+    }
+
+    //method for displaying all the movies 
+    public void displayMovie(){
+        System.out.println(movieDetailList.display());
+    }
+
+    //calculating the average rating for all movies in the list 
+    public double averageRating(){
+        double totalRating = 0.0;
+        //iterate through the list to add all the elements then use the summation to derive the average rating 
+        for (int i=0; i<movieDetailList.size();i++){
+            Movie movie = (Movie) movieDetailList.get(i); //casting int i into a Movie type (objects) and using get method to obtain elements in the list
+            totalRating += movie.getRating(); 
+            
+        }
+        //average computation of an empty list 
+        if (movieDetailList.isEmpty()){
+            return 0.0; 
+        }
+        return totalRating/movieDetailList.size(); //taking the summation divided by the number of elements in the list to obtain the average 
+
+    }
+
+    public void removeMovie(String title) {
+        if (movieDetailList.isEmpty()) {
+            System.out.println(title + " movie not found");
+            return; // Handle empty list case when no movie is found in the list 
+        }
+    
+        boolean foundAndRemoved = false; //checks if the duplicates are found and removed 
+        int i = 0;
+        //loops through the movieDetailList 
+        while (i < movieDetailList.size()) {
+            Movie currentMovie = (Movie) movieDetailList.get(i); //obtain elements from the list 
+            //compares the movie that is currently being iterated to the title provided as the parameter 
+            if (currentMovie.getTitle().equals(title)) {
+                movieDetailList.remove(i);
+                foundAndRemoved = true;
+            } else {
+                i++; //moving to the next element if no removal took place 
+            }
+        }
+    
+        if (foundAndRemoved) {
+            System.out.println(title + " movie(s) removed");
+        } else {
+            System.out.println(title + " movie not found");
+        }
+    }
+
+
+    public static void main(String[] args){
+        //Creating an Instance of the MovieManagement class 
+        MovieListManagement listManagement = new MovieListManagement();
+
+        //adding new movies into the list 
+        listManagement.addNewMovie("Breaking Bad", 2019, 9.6);
+        listManagement.addNewMovie("Shogun", 2024, 9.4);
+        listManagement.addNewMovie("The BlackList", 2011, 9.4);
+        listManagement.addNewMovie("The Gentlemen", 2024, 8.2);
+        listManagement.addNewMovie("The Witcher", 2016, 8.5);
+        listManagement.addNewMovie("The Dog Man", 2023, 8.0);
+        listManagement.addNewMovie("Hunger Games", 2023, 7.2);
+        listManagement.addNewMovie("Game of Thrones", 201, 9.0);
+        listManagement.addNewMovie("The Bee Keeper ", 2023,6.5 );
+        listManagement.addNewMovie("Monkey Man", 2024, 6.1);
+        listManagement.addNewMovie("The Yellowstone", 2019, 8.5);
+        listManagement.addNewMovie("Hunger Games", 2023, 7.2);
+
+        //displaying movies 
+        listManagement.displayMovie();
+        //diplay the average rating 
+        System.out.println("Average movie rating: "+ listManagement.averageRating());
+        //remove
+        listManagement.removeMovie("Hunger Games");
+        //display
+        listManagement.displayMovie();
+        //diplay the average rating 
+        System.out.println("Average movie rating: "+ listManagement.averageRating());
+        
+
+        
+        
+
+
+ 
+    }
+
+}
